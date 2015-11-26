@@ -90,7 +90,7 @@ class Users extends My_Controller {
 
             if (!empty($code)) {
 
-                $find = $this->User->code_verify($code, $mob);
+                $find = $this->User->code_verify($code,$mob);
                 if (!empty($find)) {
                     if ($code == $find['code']) {
                         $error['error'] = "Sussecfully Registered";
