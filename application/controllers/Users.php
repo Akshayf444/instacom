@@ -120,4 +120,11 @@ class Users extends My_Controller {
         $this->load->view('template2', $data);
     }
 
+    function activate() {
+        $this->load->model('Master');
+        $form_data['industry'] = $this->Master->getIndustry();
+        $data = array('title' => 'Activate Your Account', 'content' => 'User/activate', 'view_data' => $form_data);
+        $this->load->view('template2', $data);
+    }
+
 }
