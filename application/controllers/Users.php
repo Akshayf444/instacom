@@ -99,6 +99,7 @@ class Users extends My_Controller {
                             'status' => 1,
                         );
                         $this->User->update_status($iddd, $data);
+                        redirect('Users/activate','refresh');
                     } else {
                         $error['error'] = "Plese Enter Code Properly";
                     }
