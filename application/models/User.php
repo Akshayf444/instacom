@@ -17,5 +17,22 @@ class User extends My_model {
         $query = $this->db->get();
         return $query->result();
     }
-
+    public function mobile_add($mobile) {
+       return $this->db->insert('registration',$mobile);
+       
+    }
+    public function find_by_mobile_registration($mobile) {
+        $sql="select * from registration where mobile='$mobile'";
+        $query=  $this->db->query($sql);
+        return $query->row_array();
+    }
+    public function code_verify($code,$id) {
+        $sql="select * from registration where code='$code' and mobile='$id'";
+        $query=  $this->db->query($sql);
+        return $query->row_array();
+    }
+    public function update_status($id,$data) {
+        $this->db->where(array('id'=>$id));
+        return $this->db->update('registration',$data);
+    }
 }
