@@ -9,7 +9,7 @@ class Sendsms extends CI_Model {
     function sendsms($mobile, $messages, $medical_id = 0) {
         $authKey = "78106A1u8VLmCC054cb666b";
         $mobileNumber = $mobile;
-        $senderId = "INSTA";
+        $senderId = "INSTAC";
         $message = $messages;
         $finalmessage = rawurlencode($message);
         $smsUser = 'manish';
