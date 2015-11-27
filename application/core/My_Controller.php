@@ -3,6 +3,7 @@
 class My_Controller extends CI_Controller {
 
     public $user_id;
+    public $reg_id;
     public $user_name;
     public $mobile;
 
@@ -11,6 +12,7 @@ class My_Controller extends CI_Controller {
         $this->user_id = $this->session->userdata('user_id');
         $this->user_name = $this->session->userdata('user_name');
         $this->mobile = $this->session->userdata('mobile');
+
     }
 
     function is_logged_in() {
@@ -24,6 +26,7 @@ class My_Controller extends CI_Controller {
     function logout() {
         $this->session->unset_userdata('user_id');
         $this->session->unset_userdata('user_name');
+        $this->session->unset_userdata('mobile');
         redirect('Users/login', 'refresh');
     }
 

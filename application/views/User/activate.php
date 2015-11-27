@@ -7,6 +7,7 @@
         <div class="form-group has-feedback">
             <label>Your Name</label>
             <input type="text" class="form-control" name="user_name"/>
+            <input type="hidden" class="form-control" name="mobile" value="<?php echo $mobile ; ?>"/>
 
         </div>
         <div class="form-group has-feedback">
@@ -16,7 +17,7 @@
         <div class="form-group has-feedback">
             <label>Industry/Sector</label>
             <select class="form-control" name="industry">
-                <?php echo $industry;?>
+                <?php echo $industry; ?>
             </select>
 
         </div>
@@ -57,12 +58,12 @@
         </div>
         <div class="form-group has-feedback">
             <label>State</label>
-            <input type="password" class="form-control" name="state"/>
+            <input type="text" class="form-control" name="state"/>
 
         </div>
         <div class="form-group has-feedback">
             <label>Pincode</label>
-            <input type="password" class="form-control" name="pincode"/>
+            <input type="text" class="form-control" name="pincode"/>
 
         </div>
         <div class="row">

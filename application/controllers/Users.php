@@ -59,9 +59,10 @@ class Users extends My_Controller {
                         'created' => date('Y-m-d H:i:s'),
                         'code' => $code,
                     );
-                    $this->User->mobile_add($data);
-                    $this->Sendsms->sendsms($mobile, $message);
-                    redirect('Users/mobile_verification?id=' . $mobile . '', 'refresh');
+                    $reg_id = $this->User->mobile_add($data);
+                    //$this->Sendsms->sendsms($mobile, $message);
+                    $this->reg_id = $reg_id;
+                    redirect('Users/mobile_verification?id=' . $mobile, 'refresh');
                 } else {
                     $error['error'] = "You Mobile Number Is Already Registered";
                 }
@@ -81,19 +82,20 @@ class Users extends My_Controller {
     }
 
     function mobile_verification() {
+        $error = '';
         if ($_GET) {
             $idd = $_GET['id'];
+            $this->session->set_userdata('mobile', $idd);
         }
         if ($this->input->post()) {
             $code = $this->input->post('code');
             $mob = $this->input->post('mob');
 
             if (!empty($code)) {
-
                 $find = $this->User->code_verify($code, $mob);
                 if (!empty($find)) {
                     if ($code == $find['code']) {
-                        $error['error'] = "Successfully Registered";
+                        $error = "Successfully Registered";
                         $iddd = $find['id'];
                         $data = array(
                             'status' => 1,
@@ -101,58 +103,61 @@ class Users extends My_Controller {
                         $this->User->update_status($iddd, $data);
                         redirect('Users/activate', 'refresh');
                     } else {
-                        $error['error'] = "Plese Enter Code Properly";
+                        $error = "Plese Enter Code Properly";
                     }
                 }
             } else {
-                $error['error'] = "Plese Enter Code";
+                $error = "Plese Enter Code";
             }
         }
-        if (!empty($error['error'])) {
 
-            $data1['error'] = $error['error'];
-        } else {
-            $data1['error'] = "";
-        }
-        if (!empty($idd)) {
-            $data1['mob'] = $idd;
-        }
+        $data1['error'] = $error;
+        $data1['mob'] = $this->session->userdata('mobile');
         $data = array('title' => 'Dashboard', 'content' => 'User/mobile_verification', 'view_data' => $data1);
         $this->load->view('template2', $data);
     }
 
     function activate() {
         $this->load->model('Master');
-        if ($this->input->post()) {
-            $data = array(
-                'user_name' => $this->input->post('user_name'),
-                'company_name' => $this->input->post('company_name'),
-                'industry' => $this->input->post('industry'),
-                'password' => $this->input->post('password'),
-                'mobile' => $this->input->post('mobile'),
-                'created_at' => date('Y-m-d H:i:s', strtotime(time())),
-            );
+        if (isset($this->mobile) && $this->mobile != '') {
+            if ($this->input->post()) {
+                $userExist = $this->User->find_by_mobile($this->input->post('mobile'));
+                if (empty($userExist)) {
+                    $data = array(
+                        'user_name' => $this->input->post('user_name'),
+                        'company_name' => $this->input->post('company_name'),
+                        'industry' => $this->input->post('industry'),
+                        'password' => $this->input->post('password'),
+                        'mobile' => $this->input->post('mobile'),
+                        'reg_id' => $this->reg_id,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    );
 
-            $user_id = $this->user->add($data);
-            if (!empty($user_id)) {
-                $this->Master->addAddress(
-                        array(
-                            'address1' => $this->input->post('address1'),
-                            'address2' => $this->input->post('address2'),
-                            'country' => $this->input->post('country'),
-                            'city' => $this->input->post('city'),
-                            'state' => $this->input->post('state'),
-                            'pincode' => $this->input->post('pincode'),
-                            'state' => $this->input->post('state'),
-                            'user_id' => $user_id,
-                            'created_at' => date('Y-m-d H:i:s'),
-                        )
-                );
+                    $user_id = $this->User->add($data);
+                    if (!empty($user_id)) {
+                        $this->Master->addAddress(
+                                array(
+                                    'address1' => $this->input->post('address1'),
+                                    'address2' => $this->input->post('address2'),
+                                    'country' => $this->input->post('country'),
+                                    'city' => $this->input->post('city'),
+                                    'state' => $this->input->post('state'),
+                                    'pincode' => $this->input->post('pincode'),
+                                    'state' => $this->input->post('state'),
+                                    'user_id' => $user_id,
+                                    'created_at' => date('Y-m-d H:i:s'),
+                                )
+                        );
+                    }
+                }
             }
+            $form_data['industry'] = $this->Master->getIndustry();
+            $form_data['mobile'] = $this->session->userdata('mobile');
+            $data = array('title' => 'Activate Your Account', 'content' => 'User/activate', 'view_data' => $form_data);
+            $this->load->view('template2', $data);
+        } else {
+            $this->logout();
         }
-        $form_data['industry'] = $this->Master->getIndustry();
-        $data = array('title' => 'Activate Your Account', 'content' => 'User/activate', 'view_data' => $form_data);
-        $this->load->view('template2', $data);
     }
 
     function randomString() {
