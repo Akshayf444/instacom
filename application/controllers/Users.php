@@ -15,7 +15,7 @@ class Users extends My_Controller {
     function login() {
         if ($this->input->post()) {
             $username = $this->input->post('username');
-            $password = $this->input->post('password');
+            $password = md5($this->input->post('password'));
 
             $validUser = $this->User->authenticate($username, $password);
             if (!empty($validUser)) {
@@ -23,12 +23,9 @@ class Users extends My_Controller {
                 $this->session->set_userdata("user_name", $validUser['user_name']);
                 $this->session->set_userdata("mobile", $validUser['mobile']);
                 $this->user_id = $this->session->userdata("user_id");
-                if ($validUser['complete_profile'] == 0) {
-                    redirect('Users/completeProfile', 'refresh');
-                } else {
-                    $this->db->insert('login_history', array('user_id' => $this->user_id, 'login_date' => date('Y-m-d H:i:s'), 'ipaddress' => $this->input->ip_address()));
-                    redirect('Users/dashboard', 'refresh');
-                }
+
+                $this->db->insert('login_history', array('user_id' => $this->user_id, 'login_date' => date('Y-m-d H:i:s'), 'ipaddress' => $this->input->ip_address()));
+                redirect('Users/dashboard', 'refresh');
             }
         }
         $data = array('title' => 'Login', 'content' => 'User/login', 'view_data' => 'blank');
@@ -36,13 +33,12 @@ class Users extends My_Controller {
     }
 
     function dashboard() {
-
-        //if ($this->is_logged_in()) {
-        $data = array('title' => 'Dashboard', 'content' => 'User/dashboard', 'view_data' => 'blank');
-        $this->load->view('template1', $data);
-        //} else {
-        //  $this->logout();
-        // }
+        if ($this->is_logged_in()) {
+            $data = array('title' => 'Dashboard', 'page_title'=>'Dashboard', 'content' => 'User/dashboard', 'view_data' => 'blank');
+            $this->load->view('template1', $data);
+        } else {
+            $this->logout();
+        }
     }
 
     function register() {
@@ -127,7 +123,7 @@ class Users extends My_Controller {
                         'user_name' => $this->input->post('user_name'),
                         'company_name' => $this->input->post('company_name'),
                         'industry' => $this->input->post('industry'),
-                        'password' => $this->input->post('password'),
+                        'password' => md5($this->input->post('password')),
                         'mobile' => $this->input->post('mobile'),
                         'reg_id' => $this->reg_id,
                         'created_at' => date('Y-m-d H:i:s'),
@@ -148,6 +144,8 @@ class Users extends My_Controller {
                                     'created_at' => date('Y-m-d H:i:s'),
                                 )
                         );
+                        $this->user_id = $user_id;
+                        redirect('Users/dashboard', 'refresh');
                     }
                 }
             }

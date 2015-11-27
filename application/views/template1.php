@@ -6,7 +6,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>AdminLTE 2 | Dashboard</title>
+        <title><?php echo $title ?></title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- Bootstrap 3.3.2 -->
         <link href="<?php echo asset_url() ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -18,6 +18,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <link href="<?php echo asset_url() ?>css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 
         <link href="<?php echo asset_url() ?>css/skin-blue.min.css" rel="stylesheet" type="text/css" />
+        <script src="<?php echo asset_url() ?>js/jquery-1.11.0.js"></script>
 
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -51,7 +52,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <header class="main-header">
 
                 <!-- Logo -->
-                <a href="index2.html" class="logo"><b>Admin</b>LTE</a>
+                <a href="<?php echo site_url('Users/dashboard');?>" class="logo"><b>Instacom</b></a>
 
                 <!-- Header Navbar -->
                 <nav class="navbar navbar-static-top" role="navigation">
@@ -157,16 +158,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <!-- Menu Toggle Button -->
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <!-- The user image in the navbar-->
-                                    <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+<!--                                    <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>-->
                                     <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                    <span class="hidden-xs">Alexander Pierce</span>
+                                    <?php $CI = & get_instance(); ?>
+                                    <span class="hidden-xs"><?php echo $CI->user_name; ?></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- The user image in the menu -->
                                     <li class="user-header">
-                                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+<!--                                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />-->
                                         <p>
-                                            Alexander Pierce - Web Developer
+                                            <?php echo $CI->user_name; ?>
+
                                             <small>Member since Nov. 2012</small>
                                         </p>
                                     </li>
@@ -188,7 +191,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                            <a href="<?php echo site_url('Users/logout'); ?>" class="btn btn-default btn-flat">Sign out</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -204,16 +207,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <section class="sidebar">
 
                     <!-- Sidebar user panel (optional) -->
-                    <div class="user-panel">
-                        <div class="pull-left image">
-                            <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
-                        </div>
-                        <div class="pull-left info">
-                            <p>Alexander Pierce</p>
-                            <!-- Status -->
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                        </div>
-                    </div>
+                    <!--                    <div class="user-panel">
+                                            <div class="pull-left image">
+                                                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+                                            </div>
+                                            <div class="pull-left info">
+                                                <p>Alexander Pierce</p>
+                                                 Status 
+                                                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                                            </div>
+                                        </div>-->
 
                     <!-- search form (Optional) -->
                     <form action="#" method="get" class="sidebar-form">
@@ -228,15 +231,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                     <!-- Sidebar Menu -->
                     <ul class="sidebar-menu">
-                        <li class="header">HEADER</li>
-                        <!-- Optionally, you can add icons to the links -->
-                        <li class="active"><a href="#"><span>Link</span></a><</li>
+                        <!--                        <li class="header">HEADER</li>-->
+
                         <li><a href="#"><span>Another Link</span></a></li>
                         <li class="treeview">
-                            <a href="#"><span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <a href="#"><span>Contact</span> <i class="fa fa-angle-left pull-right"></i></a>
                             <ul class="treeview-menu">
-                                <li><a href="#">Link in level 2</a></li>
-                                <li><a href="#">Link in level 2</a></li>
+                                <li><a href="#">Add</a></li>
+                                <li><a href="#">Update</a></li>
                             </ul>
                         </li>
                     </ul><!-- /.sidebar-menu -->
@@ -249,7 +251,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
-                        Page Header
+                        <?php echo isset($page_title) ? $page_title : ''; ?>
                         <small>Optional description</small>
                     </h1>
                     <ol class="breadcrumb">
@@ -260,7 +262,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                 <!-- Main content -->
                 <section class="content">
-                   <?php $this->load->view($content, $view_data); ?>
+                    <?php $this->load->view($content, $view_data); ?>
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
 
@@ -268,7 +270,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <footer class="main-footer">
                 <!-- To the right -->
                 <div class="pull-right hidden-xs">
-                   
+
                 </div>
                 <!-- Default to the left --> 
                 <strong>Copyright &copy; 2015 <a href="#">Instacom</a>.</strong> All rights reserved.
@@ -278,7 +280,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         <!-- REQUIRED JS SCRIPTS -->
 
-        <script src="<?php echo asset_url() ?>js/jquery-1.11.0.js"></script>
+
         <!-- Bootstrap 3.3.2 JS -->
         <script src="<?php echo asset_url() ?>js/app.min.js" type="text/javascript"></script>
 

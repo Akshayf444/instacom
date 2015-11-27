@@ -1,4 +1,7 @@
-<?php echo form_open('Users/activate'); ?>
+<?php
+$attributes = array('id' => 'activate');
+echo form_open('Users/activate', $attributes);
+?>
 <div class="col-lg-4 col-lg-offset-2">
     <div class="login-logo">
         Basic Info
@@ -7,7 +10,7 @@
         <div class="form-group has-feedback">
             <label>Your Name</label>
             <input type="text" class="form-control" name="user_name"/>
-            <input type="hidden" class="form-control" name="mobile" value="<?php echo $mobile ; ?>"/>
+            <input type="hidden" class="form-control" name="mobile" value="<?php echo $mobile; ?>"/>
 
         </div>
         <div class="form-group has-feedback">
@@ -77,3 +80,54 @@
     </div><!-- /.login-box-body -->
 </div><!-- /.login-box -->
 </form>
+<script>
+    $('document').ready(function () {
+
+        $('#activate').formValidation({
+            message: 'This value is not valid',
+            icon: {
+            },
+            fields: {
+                user_name: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Your Name is Required'
+                        },
+                    }
+                },
+                company_name: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Company Name is required'
+                        },
+                    }
+                },
+                password: {
+                    validators: {
+                        identical: {
+                            field: 'rpassword',
+                            message: 'The password and its Repeat are not the same'
+                        }
+                    }
+                },
+                rpassword: {
+                    validators: {
+                        identical: {
+                            field: 'password',
+                            message: 'The password and its Repeat are not the same'
+                        }
+                    }
+                },
+                pincode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Pincode is required'
+                        },
+                    }
+                },
+            }
+        });
+    });
+</script>
+<script src="<?php echo asset_url() ?>js/formValidation.min.js" type="text/javascript"></script>
+<script src="<?php echo asset_url() ?>js/bootstrap.min.js" type="text/javascript"></script>

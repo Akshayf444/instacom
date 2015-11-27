@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title><?php echo $title?></title>
+        <title><?php echo $title ?></title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- Bootstrap 3.3.2 -->
         <link href="<?php echo asset_url() ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -10,7 +10,7 @@
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
         <link href="<?php echo asset_url() ?>css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-
+        <script src="<?php echo asset_url() ?>js/jquery-1.11.0.js"></script>
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,12 +21,6 @@
     </head>
     <body class="login-page">
         <?php $this->load->view($content, $view_data); ?>
-
-        <!-- jQuery 2.1.3 -->
-        <script src="<?php echo asset_url() ?>js/jquery-1.11.0.js"></script>
-        <!-- Bootstrap 3.3.2 JS -->
         <script src="<?php echo asset_url() ?>js/bootstrap.min_1.js" type="text/javascript"></script>
-        <!-- iCheck -->
-
     </body>
 </html>
