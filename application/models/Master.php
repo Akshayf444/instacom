@@ -23,4 +23,9 @@ class Master extends My_model {
         return $industry;
     }
 
+    function addAddress($data) {
+        $this->db->insert('address_master', $data);
+        return $this->db->insert_id();
+    }
+
 }

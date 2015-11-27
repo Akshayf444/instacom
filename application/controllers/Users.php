@@ -93,7 +93,7 @@ class Users extends My_Controller {
                 $find = $this->User->code_verify($code, $mob);
                 if (!empty($find)) {
                     if ($code == $find['code']) {
-                        $error['error'] = "Sussecfully Registered";
+                        $error['error'] = "Successfully Registered";
                         $iddd = $find['id'];
                         $data = array(
                             'status' => 1,
@@ -122,9 +122,43 @@ class Users extends My_Controller {
 
     function activate() {
         $this->load->model('Master');
+        if ($this->input->post()) {
+            $data = array(
+                'user_name' => $this->input->post('user_name'),
+                'company_name' => $this->input->post('company_name'),
+                'industry' => $this->input->post('industry'),
+                'password' => $this->input->post('password'),
+                'mobile' => $this->input->post('mobile'),
+                'created_at' => date('Y-m-d H:i:s', strtotime(time())),
+            );
+
+            $user_id = $this->user->add($data);
+            if (!empty($user_id)) {
+                $this->Master->addAddress(
+                        array(
+                            'address1' => $this->input->post('address1'),
+                            'address2' => $this->input->post('address2'),
+                            'country' => $this->input->post('country'),
+                            'city' => $this->input->post('city'),
+                            'state' => $this->input->post('state'),
+                            'pincode' => $this->input->post('pincode'),
+                            'state' => $this->input->post('state'),
+                            'user_id' => $user_id,
+                            'created_at' => date('Y-m-d H:i:s'),
+                        )
+                );
+            }
+        }
         $form_data['industry'] = $this->Master->getIndustry();
         $data = array('title' => 'Activate Your Account', 'content' => 'User/activate', 'view_data' => $form_data);
         $this->load->view('template2', $data);
+    }
+
+    function randomString() {
+        for ($i = 1; $i < 1000000; $i++) {
+            $result = substr(md5($i), 0, 5);
+            echo $result . ",\n";
+        }
     }
 
 }
