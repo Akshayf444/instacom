@@ -19,14 +19,14 @@ class Users extends My_Controller {
 
             $validUser = $this->User->authenticate($username, $password);
             if (!empty($validUser)) {
-                $this->session->set_userdata("user_id", $validUser['psr_empid']);
-                $this->session->set_userdata("user_name", $validUser['psr_name']);
-                $this->session->set_userdata("mobile", $validUser['psr_mobile']);
+                $this->session->set_userdata("user_id", $validUser['user_id']);
+                $this->session->set_userdata("user_name", $validUser['user_name']);
+                $this->session->set_userdata("mobile", $validUser['mobile']);
                 $this->user_id = $this->session->userdata("user_id");
                 if ($validUser['complete_profile'] == 0) {
                     redirect('Users/completeProfile', 'refresh');
                 } else {
-                    $this->db->insert('login_history', array('psr_id' => $this->user_id, 'login_date' => date('Y-m-d H:i:s'), 'ipaddress' => $this->input->ip_address()));
+                    $this->db->insert('login_history', array('user_id' => $this->user_id, 'login_date' => date('Y-m-d H:i:s'), 'ipaddress' => $this->input->ip_address()));
                     redirect('Users/dashboard', 'refresh');
                 }
             }
@@ -90,7 +90,7 @@ class Users extends My_Controller {
 
             if (!empty($code)) {
 
-                $find = $this->User->code_verify($code,$mob);
+                $find = $this->User->code_verify($code, $mob);
                 if (!empty($find)) {
                     if ($code == $find['code']) {
                         $error['error'] = "Successfully Registered";
@@ -99,7 +99,7 @@ class Users extends My_Controller {
                             'status' => 1,
                         );
                         $this->User->update_status($iddd, $data);
-                        redirect('Users/activate','refresh');
+                        redirect('Users/activate', 'refresh');
                     } else {
                         $error['error'] = "Plese Enter Code Properly";
                     }
