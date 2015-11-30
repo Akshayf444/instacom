@@ -58,17 +58,16 @@ class Contact extends My_Controller {
     }
     public function Csv_upload() {
        
-//            if ($this->input->post()) {
+
             $user_id = $this->session->userdata('user_id');
 
             $config['upload_path'] = $_SERVER['DOCUMENT_ROOT'] . '\instacom\assets\Csv';
 
             $config['allowed_types'] = '*';
             $config['max_size'] = '4096';
-            $new_name = time();
-            $config['file_name'] = $new_name;
+//            $new_name = time();
+//            $config['file_name'] = $new_name;
             $this->load->library('upload', $config);
-            $this->upload->display_errors('', '');
             if (!$this->upload->do_upload("file")) {
                 echo $this->upload->display_errors();
                 die();

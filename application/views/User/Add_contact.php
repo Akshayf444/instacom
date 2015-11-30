@@ -67,8 +67,7 @@
             <div class="row">
                 <div class="col-lg-3"></div>
                 <div class="col-lg-6">
-                    <?php 
-                    echo form_open('Contact/Csv_upload')?>
+                    <?php echo form_open('Contact/Csv_upload')?>
                     <div class="form-group">
                         <input type="file" name="file"/>
                     </div>
