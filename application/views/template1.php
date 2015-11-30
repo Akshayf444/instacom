@@ -286,6 +286,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         <script src="<?php echo asset_url() ?>js/bootstrap.min_1.js" type="text/javascript"></script>
         <!-- AdminLTE App -->
+        <script src="<?php echo asset_url() ?>js/formValidation.min.js" type="text/javascript"></script>
+        <script src="<?php echo asset_url() ?>js/bootstrap.min.js" type="text/javascript"></script>
 
     </body>
 </html>
