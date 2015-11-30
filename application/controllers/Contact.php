@@ -83,16 +83,17 @@ class Contact extends My_Controller {
                 $csv_array = $this->csvimport->get_array($file_path);
                 foreach ($csv_array as $row) {
                     $insert_data = array(
-                        'csv'=>$row['0'],
+                        'csv'=>$row['mobile'],
                         'created'=>date('Y-m-d H:i:s'),
                         'user_id'=>$this->session->userdata('user_id'),
                     );
                     $this->Contact_model->insert_csv($insert_data);
                 }
                 $this->session->set_flashdata('success', 'Csv Data Imported Succesfully');
-                echo "<pre>"; print_r($insert_data);
+                //echo "<pre>"; print_r($insert_data);
             } else 
                 $data['error'] = "Error occured";
+            echo $data['error'];
             }
 //        
 //
