@@ -56,7 +56,7 @@ class Users extends My_Controller {
                         'code' => $code,
                     );
                     $reg_id = $this->User->mobile_add($data);
-                    //$this->Sendsms->sendsms($mobile, $message);
+                    $this->Sendsms->sendsms($mobile, $message);
                     $this->reg_id = $reg_id;
                     redirect('Users/mobile_verification?id=' . $mobile, 'refresh');
                 } else {
