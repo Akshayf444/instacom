@@ -31,4 +31,17 @@ class Contact_model extends CI_Model {
         return $this->db->insert('csv', $data);
     }
 
+    function get_addressbook() {
+        $query = $this->db->get('contact');
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return FALSE;
+        }
+    }
+
+    function insert_csv($data) {
+        $this->db->insert('contact', $data);
+    }
+
 }
