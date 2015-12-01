@@ -12,8 +12,8 @@
 <div class="tabs">
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#tab1">Add Contact</a></li>
-        <li><a data-toggle="tab" href="#tab2">Menu 1</a></li>
-        <li><a data-toggle="tab" href="#tab3">Menu 2</a></li>
+        <li><a data-toggle="tab" href="#tab2">Add Multiple</a></li>
+        <li><a data-toggle="tab" href="#tab3">Csv Upload</a></li>
     </ul>
 
     <div class="tab-content">

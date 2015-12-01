@@ -138,5 +138,13 @@ class Contact extends My_Controller {
             
         }
     }
-
+ public function Send_sms() {
+     $user_id = $this->session->userdata('user_id');
+        if ($this->input->post()) {
+            
+        }
+        $show['list'] = $this->Contact_model->group_list($user_id);
+        $data = array('title' => 'Send Sms', 'content' => 'User/Send_sms', 'view_data' => $show);
+        $this->load->view('template1', $data);
+    }
 }
