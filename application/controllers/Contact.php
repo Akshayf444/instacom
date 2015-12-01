@@ -13,6 +13,7 @@ class Contact extends My_Controller {
     function view() {
         $user_id = $this->session->userdata('user_id');
         $show['show'] = $this->Contact_model->Show_contact($user_id);
+        $show['list'] = $this->Contact_model->group_list($user_id);
         $data = array('title' => 'View', 'content' => 'User/View_contact', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
@@ -76,31 +77,66 @@ class Contact extends My_Controller {
         } else {
             $upload_result = $this->upload->data();
 
-           // $this->Contact_model->csv($upload_result['file_name'], $user_id);
-            $file_path = asset_url().'Csv/'.$upload_result['file_name'];
+            // $this->Contact_model->csv($upload_result['file_name'], $user_id);
+            $file_path = asset_url() . 'Csv/' . $upload_result['file_name'];
             echo $file_path;
             if ($this->csvimport->get_array($file_path)) {
                 $csv_array = $this->csvimport->get_array($file_path);
                 foreach ($csv_array as $row) {
                     $insert_data = array(
-                        'csv'=>$row['mobile'],
-                        'created'=>date('Y-m-d H:i:s'),
-                        'user_id'=>$this->session->userdata('user_id'),
+                        'csv' => $row['mobile'],
+                        'created' => date('Y-m-d H:i:s'),
+                        'user_id' => $this->session->userdata('user_id'),
                     );
                     $this->Contact_model->insert_csv($insert_data);
                 }
                 $this->session->set_flashdata('success', 'Csv Data Imported Succesfully');
                 //echo "<pre>"; print_r($insert_data);
-            } else 
+            } else
                 $data['error'] = "Error occured";
             echo $data['error'];
-            }
+        }
 //        
 //
 //
         $data = array('title' => 'Add Contact', 'content' => 'User/Add_contact', 'view_data' => 'blank');
         $this->load->view('template1', $data);
     }
-    
+
+    public function Add_group() {
+        if ($_POST) {
+            $check = $_POST['check'];
+            $check1 = $_POST['list'];
+            for ($i = 0; $i < count($check); $i++) {
+                $data = array(
+                    'contact_id' => $check[$i],
+                    'group_id' => $check1,
+                    'created' => date('Y-m-d H:i:s'),
+                    'user_id' => $this->session->userdata('user_id'),
+                );
+                //$check = $this->Contact_model->mapping_check($this->session->userdata('user_id'), $check[$i]);
+                //if (empty($check)) {
+                    $add = $this->Contact_model->mapping($data);
+                //}
+            }
+            //redirect('Contact/view', 'refresh');
+        }
+    }
+    public function create_group() {
+        if ($_POST) {
+            $check = $_POST['name'];
+            if(!empty($check))
+            {
+                $data=array(
+                    'group_name'=>$check,
+                    'user_id'=>  $this->session->userdata('user_id'),
+                    'created'=>date('Y-m-d H:i:s'),
+                );
+                $this->Contact_model->group_create($data);
+                redirect('Contact/view', 'refresh');
+            }
+            
+        }
+    }
 
 }

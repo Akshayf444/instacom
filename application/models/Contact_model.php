@@ -41,7 +41,23 @@ class Contact_model extends CI_Model {
     }
 
     function insert_csv($data) {
-        $this->db->insert('contact', $data);
+       return $this->db->insert('contact', $data);
+    }
+    function mapping($data) {
+       return $this->db->insert('mapping', $data);
+    }
+    function mapping_check($user_id,$contact_id) {
+       $sql="select * from mapping where contact_id=$contact_id And user_id=$user_id";
+       $query=  $this->db->query($sql);
+       return $query->row_array();
+    }
+    function group_list($user_id) {
+       $sql="select * from group_list where user_id=$user_id";
+       $query=  $this->db->query($sql);
+       return $query->result();
+    }
+    function group_create($data) {
+       return $this->db->insert('group_list', $data);
     }
 
 }
