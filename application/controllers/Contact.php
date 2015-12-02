@@ -107,18 +107,20 @@ class Contact extends My_Controller {
         if ($_POST) {
             $check = $_POST['check'];
             $check1 = $_POST['list'];
-            echo count($check);
+
+            var_dump($check) ;
+
             for ($i = 0; $i < count($check); $i++) {
                 $data = array(
-                    'contact_id' =>$check[$i],
+                    'contact_id' => $check[$i],
                     'group_id' => $check1,
                     'created' => date('Y-m-d H:i:s'),
                     'user_id' => $this->session->userdata('user_id'),
                 );
-                $check = $this->Contact_model->mapping_check($this->session->userdata('user_id'), $check[$i]);
-                if (empty($check)) {
-                $add = $this->Contact_model->mapping($data);
-               }
+                $checkKK = $this->Contact_model->mapping_check($this->session->userdata('user_id'), $check[$i],$check1);
+                if (empty($checkKK)) {
+                    $add = $this->Contact_model->mapping($data);
+                }
             }
             redirect('Contact/view', 'refresh');
         }
@@ -135,6 +137,20 @@ class Contact extends My_Controller {
                 );
                 $this->Contact_model->group_create($data);
                 redirect('Contact/view', 'refresh');
+            }
+        }
+    }
+    public function create_group2() {
+        if ($_POST) {
+            $check = $_POST['name'];
+            if (!empty($check)) {
+                $data = array(
+                    'group_name' => $check,
+                    'user_id' => $this->session->userdata('user_id'),
+                    'created' => date('Y-m-d H:i:s'),
+                );
+                $this->Contact_model->group_create($data);
+                redirect('Contact/Groups', 'refresh');
             }
         }
     }
@@ -183,6 +199,25 @@ class Contact extends My_Controller {
         }
         $show['list'] = $this->Contact_model->group_list($user_id);
         $data = array('title' => 'Send Sms', 'content' => 'User/Send_sms', 'view_data' => $show);
+        $this->load->view('template1', $data);
+    }
+    public function group() {
+        $user_id = $this->session->userdata('user_id');
+        if ($this->input->post()) {
+            
+        }
+        $show['list'] = $this->Contact_model->group_list($user_id);
+        $data = array('title' => 'Groups', 'content' => 'User/Group', 'view_data' => $show);
+        $this->load->view('template1', $data);
+    }
+    public function Group_inside() {
+        $user_id = $this->session->userdata('user_id');
+        if ($_GET) {
+            $group_id=$_GET['id'];
+        }
+        $show['list'] = $this->Contact_model->first_last($group_id);
+        $show['count'] = $this->Contact_model->contact_count($group_id);
+        $data = array('title' => 'Groups', 'content' => 'User/group_inside', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
 

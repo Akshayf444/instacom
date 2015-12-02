@@ -237,10 +237,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li class="treeview">
                             <a href="#"><span>Contact</span> <i class="fa fa-angle-left pull-right"></i></a>
                             <ul class="treeview-menu">
-                                <li><a href="#">Add</a></li>
-                                <li><a href="#">Update</a></li>
+                                <li><a href="<?php echo site_url()?>/Contact/view">View</a></li>
+                                <li><a href="<?php echo site_url()?>/Contact/Add_contact">Add</a></li>
+<!--                                <li><a href="#">Update</a></li>-->
                             </ul>
                         </li>
+                        <li><a href="<?php echo site_url();?>/Contact/group"><span>Groups</span></a></li>
                     </ul><!-- /.sidebar-menu -->
                 </section>
                 <!-- /.sidebar -->

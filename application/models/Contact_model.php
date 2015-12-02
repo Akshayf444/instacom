@@ -48,8 +48,8 @@ class Contact_model extends CI_Model {
         return $this->db->insert('mapping', $data);
     }
 
-    function mapping_check($user_id, $contact_id) {
-        $sql = "select * from mapping where contact_id=$contact_id And user_id=$user_id";
+    function mapping_check($user_id, $contact_id,$group_id) {
+        $sql = "select * from mapping where contact_id=$contact_id And user_id=$user_id and group_id=$group_id";
         $query = $this->db->query($sql);
         return $query->row_array();
     }
@@ -72,9 +72,15 @@ class Contact_model extends CI_Model {
         $sql = "SELECT * FROM mapping mp
                 LEFT JOIN  contact c
                 ON c.`contact_id`=mp.`contact_id`
-                WHERE mp.group_id=$group_id and c.fname=$fname";
+                WHERE mp.group_id=$group_id ";
         $query = $this->db->query($sql);
         return $query->result();
+    }
+    function contact_count($group_id) {
+        $sql = "SELECT COUNT(m.contact_id) AS count_contact FROM mapping m
+                WHERE group_id=$group_id";
+        $query = $this->db->query($sql);
+        return $query->row_array();
     }
 
     function group_create($data) {
