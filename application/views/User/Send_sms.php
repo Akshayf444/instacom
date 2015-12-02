@@ -3,6 +3,17 @@
         <h3 class="page-header"> Send SMS</h3>
     </div>
 </div>
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class=""> 
+        <?php 
+        if(isset($success))
+        {
+            echo $success;
+        }
+        ?></h3>
+    </div>
+</div>
 <div class="tabs">
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#tab1">Send SMS</a></li>
@@ -16,7 +27,7 @@
                 <div class="col-lg-6 panel panel-default">
                     <?php
                     $attributes = array('id' => 'activate');
-                    echo form_open('Contact/', $attributes)
+                    echo form_open('Contact/Send_sms', $attributes)
                     ?>
                     <?php echo validation_errors(); ?>
                     <div class="panel-body">
@@ -42,11 +53,11 @@
             <div class="row">
                 <div class="col-lg-3"></div>
                 <div class="col-lg-6 panel panel-default">
-                    <?php echo form_open('Contact/') ?>
+                    <?php echo form_open('Contact/Send_sms_group') ?>
                     <div class="panel-body">
                         <div class="form-group">
                             <label class="control-label">Select Group</label>
-                            <select class="form-control">
+                            <select class="form-control" name="group">
                                 <option value="">-Select-</option>
                                 <?php foreach ($list as $li): ?>
                                     <option value="<?php echo $li->id ?>"><?php echo $li->group_name ?></option>
@@ -54,8 +65,12 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <a class="btn btn-primary" id="first" name="first">First Name</a>
+                            <a class="btn btn-primary" id="last" name="last">Last Name</a>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label">Message</label>
-                            <textarea class="form-control" name="message"></textarea>
+                            <textarea class="form-control" id="message" name="message"></textarea>
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Send SMS" class="btn btn-success pull-right"/>
@@ -67,3 +82,13 @@
         </div>
     </div>
 </div>
+<script>
+$(document).ready(function(){
+    $('#first').click(function(){
+        $('#message').append('#FirstName#');
+    })
+    $('#last').click(function(){
+        $('#message').append('#LastName#');
+    })
+})
+</script>

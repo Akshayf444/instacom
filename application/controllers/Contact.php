@@ -107,44 +107,83 @@ class Contact extends My_Controller {
         if ($_POST) {
             $check = $_POST['check'];
             $check1 = $_POST['list'];
+            echo count($check);
             for ($i = 0; $i < count($check); $i++) {
                 $data = array(
-                    'contact_id' => $check[$i],
+                    'contact_id' =>$check[$i],
                     'group_id' => $check1,
                     'created' => date('Y-m-d H:i:s'),
                     'user_id' => $this->session->userdata('user_id'),
                 );
-                //$check = $this->Contact_model->mapping_check($this->session->userdata('user_id'), $check[$i]);
-                //if (empty($check)) {
-                    $add = $this->Contact_model->mapping($data);
-                //}
+                $check = $this->Contact_model->mapping_check($this->session->userdata('user_id'), $check[$i]);
+                if (empty($check)) {
+                $add = $this->Contact_model->mapping($data);
+               }
             }
-            //redirect('Contact/view', 'refresh');
+            redirect('Contact/view', 'refresh');
         }
     }
+
     public function create_group() {
         if ($_POST) {
             $check = $_POST['name'];
-            if(!empty($check))
-            {
-                $data=array(
-                    'group_name'=>$check,
-                    'user_id'=>  $this->session->userdata('user_id'),
-                    'created'=>date('Y-m-d H:i:s'),
+            if (!empty($check)) {
+                $data = array(
+                    'group_name' => $check,
+                    'user_id' => $this->session->userdata('user_id'),
+                    'created' => date('Y-m-d H:i:s'),
                 );
                 $this->Contact_model->group_create($data);
                 redirect('Contact/view', 'refresh');
             }
-            
         }
     }
- public function Send_sms() {
-     $user_id = $this->session->userdata('user_id');
+
+    public function Send_sms() {
+        $user_id = $this->session->userdata('user_id');
         if ($this->input->post()) {
-            
+            $mobile = $this->input->post('mobile');
+            $message = $this->input->post('message');
+            if (!empty($message) && !empty($mobile)) {
+                $this->Sendsms->sendsms($mobile, $message);
+                $show['success'] = "Successfully Send ";
+            }
         }
         $show['list'] = $this->Contact_model->group_list($user_id);
         $data = array('title' => 'Send Sms', 'content' => 'User/Send_sms', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
+
+    public function Send_sms_group() {
+        $user_id = $this->session->userdata('user_id');
+        if ($this->input->post()) {
+            $group = $this->input->post('group');
+            $message = $this->input->post('message');
+            if (!empty($message) && !empty($group)) {
+                $check = $this->Contact_model->send_group($group);
+                if (!empty($check)) {
+                    foreach ($check as $ck) {
+                        $store = str_replace("#FirstName#", $ck->fname, $message);
+                        $store1 = str_replace("#LastName#", $ck->lname, $store);
+                        $this->Sendsms->sendsms($ck->mobile, $store1);
+                        $data = array(
+                            'number' => $ck->mobile,
+                            'group_id' => $ck->group_id,
+                            'contact_id' => $ck->contact_id,
+                            'user_id' => $user_id,
+                            'created' => date('Y-m-d H:i:s'),
+                        );
+                        if (!empty($data)) {
+                            $this->Contact_model->save_sms_history($data);
+                        }
+                    }
+                    $show['success'] = "Successfully Send ";
+                }
+            }
+        }
+        $show['list'] = $this->Contact_model->group_list($user_id);
+        $data = array('title' => 'Send Sms', 'content' => 'User/Send_sms', 'view_data' => $show);
+        $this->load->view('template1', $data);
+    }
+
 }

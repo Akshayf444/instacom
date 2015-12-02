@@ -41,23 +41,47 @@ class Contact_model extends CI_Model {
     }
 
     function insert_csv($data) {
-       return $this->db->insert('contact', $data);
+        return $this->db->insert('contact', $data);
     }
+
     function mapping($data) {
-       return $this->db->insert('mapping', $data);
+        return $this->db->insert('mapping', $data);
     }
-    function mapping_check($user_id,$contact_id) {
-       $sql="select * from mapping where contact_id=$contact_id And user_id=$user_id";
-       $query=  $this->db->query($sql);
-       return $query->row_array();
+
+    function mapping_check($user_id, $contact_id) {
+        $sql = "select * from mapping where contact_id=$contact_id And user_id=$user_id";
+        $query = $this->db->query($sql);
+        return $query->row_array();
     }
+
     function group_list($user_id) {
-       $sql="select * from group_list where user_id=$user_id";
-       $query=  $this->db->query($sql);
-       return $query->result();
+        $sql = "select * from group_list where user_id=$user_id";
+        $query = $this->db->query($sql);
+        return $query->result();
     }
+
+    function send_group($group_id) {
+        $sql = "SELECT * FROM mapping mp
+                LEFT JOIN  contact c
+                ON c.`contact_id`=mp.`contact_id`
+                WHERE mp.group_id=$group_id";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+    function first_last($group_id) {
+        $sql = "SELECT * FROM mapping mp
+                LEFT JOIN  contact c
+                ON c.`contact_id`=mp.`contact_id`
+                WHERE mp.group_id=$group_id and c.fname=$fname";
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+
     function group_create($data) {
-       return $this->db->insert('group_list', $data);
+        return $this->db->insert('group_list', $data);
+    }
+    function save_sms_history($data) {
+        return $this->db->insert('sms_count', $data);
     }
 
 }
