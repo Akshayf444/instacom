@@ -51,7 +51,7 @@
 
         <div id="tab2" class="tab-pane fade">
             <div class="row">
-                <div class="col-lg-3"></div>
+                <div class="col-lg-1"></div>
                 <div class="col-lg-6 panel panel-default">
                     <?php echo form_open('Contact/Send_sms_group') ?>
                     <div class="panel-body">
@@ -78,6 +78,19 @@
                     </div>
                     </form>
                 </div>
+                <div class="col-lg-3 panel panel-default">
+                    <div class="panel panel-body">
+                        <div class="form-group">
+                            <label class="control-label">Select Template</label>
+                            <select class="form-control" name="template" id="my-select">
+                                <option value="">-Select-</option>
+                                <?php foreach ($show as $li): ?>
+                                    <option  value="<?php echo $li->message ?>"><?php echo $li->title ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>   
         </div>
     </div>
@@ -89,6 +102,10 @@ $(document).ready(function(){
     })
     $('#last').click(function(){
         $('#message').append('#LastName#');
+    })
+    $('#my-select').change(function(){
+       // alert($('#message2').val());
+        $('#message').val($(this).val());
     })
 })
 </script>

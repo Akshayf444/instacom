@@ -243,6 +243,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </ul>
                         </li>
                         <li><a href="<?php echo site_url();?>/Contact/group"><span>Groups</span></a></li>
+                        <li><a href="<?php echo site_url();?>/Contact/Send_sms"><span>Sms</span></a></li>
                     </ul><!-- /.sidebar-menu -->
                 </section>
                 <!-- /.sidebar -->

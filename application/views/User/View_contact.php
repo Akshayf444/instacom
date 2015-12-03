@@ -6,14 +6,16 @@
 </div>
 <div class="row">
     <div class="col-lg-2"></div>
-    <?php echo form_open('Contact/Add_group'); ?>
+    <?php //echo form_open('Contact/Add_group'); ?>
     <table  class="col-lg-6 table table-bordered table-responsive table-striped">
 
         <tr>
-            <th><label class="control-label">Check</label></th>
+<!--            <th><label class="control-label">Check</label></th>-->
             <th><label class="control-label">Mobile</label></th>
             <th><label class="control-label">First Name</label></th>
             <th><label class="control-label">Last Name</label></th>
+            <th><label class="control-label">Edit</label></th>
+            <th><label class="control-label">Delete</label></th>
 
 
         </tr>
@@ -21,17 +23,19 @@
             ?>
             <tr>
 
-                <td><input type="checkbox" class="" name="check[]" value="<?php echo $sh->contact_id; ?>"/></td>
+<!--                <td><input type="checkbox" class="" name="check[]" value="<?php echo $sh->contact_id; ?>"/></td>-->
                 <td><?php echo $sh->mobile; ?></td>
                 <td><?php echo $sh->fname; ?></td>
                 <td><?php echo $sh->lname; ?></td>
+                <td><a href="<?php echo site_url()?>/Contact/Edit_Contact?id=<?php echo $sh->contact_id; ?>">Edit</a></td>
+                <td><a href="<?php echo site_url()?>/Contact/Delete_Contact?id=<?php echo $sh->contact_id; ?>">Delete</a></td>
 
             </tr>            
         <?php endforeach ?>
 
     </table>
    
-    <div class="row">
+<!--    <div class="row">
         <div class="col-lg-6 ">
         </div>
         <div class="col-lg-3 ">
@@ -46,8 +50,8 @@
             
             <input type="submit" value="Add To Group" class="btn btn-success pull-left"/>
         </div>
-    </div>
-</form>
+    </div>-->
+<!--</form>-->
 <div  class="modal fade " tabindex="-1" role="dialog" aria-labelledby="ModalLabel" id="customer" aria-hidden="true">
     <div style="width:40%;" class="modal-dialog ">
         <div class="modal-content">

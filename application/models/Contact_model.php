@@ -7,7 +7,21 @@ class Contact_model extends CI_Model {
     }
 
     public function Add_contact($data) {
-        return $this->db->insert('contact', $data);
+        $this->db->insert('contact', $data);
+        return $this->db->insert_id();
+    }
+    public function find_by_id($contact_id) {
+        $sql = "select * from contact where contact_id=$contact_id";
+        $query = $this->db->query($sql);
+        return $query->row_array();
+    }
+    public function update_contact($id,$data) {
+        $this->db->where(array('contact_id'=>$id));
+        return $this->db->update('contact',$data);
+    }
+    public function delete_contact($id) {
+        $this->db->where(array('contact_id'=>$id));
+        return $this->db->delete('contact');
     }
 
     public function Show_contact($user_id) {
@@ -88,6 +102,15 @@ class Contact_model extends CI_Model {
     }
     function save_sms_history($data) {
         return $this->db->insert('sms_count', $data);
+    }
+    function Add_Template($data) {
+        return $this->db->insert('Template', $data);
+    }
+    function template_view($user_id) {
+        $sql = "SELECT * FROM Template
+                WHERE user_id=$user_id";
+        $query = $this->db->query($sql);
+        return $query->result();
     }
 
 }

@@ -13,7 +13,7 @@
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#tab1">Add Contact</a></li>
         <li><a data-toggle="tab" href="#tab2">Add Multiple</a></li>
-        <li><a data-toggle="tab" href="#tab3">Csv Upload</a></li>
+<!--        <li><a data-toggle="tab" href="#tab3">Csv Upload</a></li>-->
     </ul>
 
     <div class="tab-content">
@@ -37,6 +37,15 @@
                         <div class="form-group">
                             <label class="control-label">Mobile</label>
                             <input type="text" class="form-control"  name="mobile" placeholder="Enter Mobile Number"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Select Group</label>
+                            <select class="form-control" name="group_id">
+                                <option value="">-Select Group-</option>
+                            <?php foreach($list as $sh):?>
+                                <option value="<?php echo $sh->id?>"><?php echo $sh->group_name?></option>
+                                <?php endforeach;?>
+                                </select>
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-success pull-right" value="Add Contact" />

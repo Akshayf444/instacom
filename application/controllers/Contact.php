@@ -18,22 +18,40 @@ class Contact extends My_Controller {
         $this->load->view('template1', $data);
     }
 
+    function group_view() {
+        $user_id = $this->session->userdata('user_id');
+        $check = $this->Contact_model->duplicate($user_id);
+
+        $data = array('title' => 'View', 'content' => 'User/View_contact', 'view_data' => $show);
+        $this->load->view('template1', $data);
+    }
+
     public function Add_contact() {
+        $user_id = $this->session->userdata('user_id');
         if ($this->input->post()) {
             $data = array(
                 'fname' => $this->input->post('first_name'),
                 'lname' => $this->input->post('last_name'),
                 'mobile' => $this->input->post('mobile'),
-                'user_id' => $this->session->userdata('user_id'),
+                'user_id' => $user_id,
                 'created_at' => date('Y-m-d H:i:s'),
             );
             $check = $this->Contact_model->duplicate($this->session->userdata('user_id'), $this->input->post('mobile'));
             if (empty($check)) {
-                $this->Contact_model->Add_contact($data);
+                $return = $this->Contact_model->Add_contact($data);
+                $data = array(
+                    'contact_id' => $return,
+                    'user_id' => $user_id,
+                    'created' => date('Y-m-d H:i:s'),
+                    'group_id' => $this->input->post('group_id'),
+                );
+
+                $this->Contact_model->mapping($data);
             }
             redirect('Contact/view');
         }
-        $data = array('title' => 'Add Contact', 'content' => 'User/Add_contact', 'view_data' => 'blank');
+        $show['list'] = $this->Contact_model->group_list($this->session->userdata('user_id'));
+        $data = array('title' => 'Add Contact', 'content' => 'User/Add_contact', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
 
@@ -108,7 +126,7 @@ class Contact extends My_Controller {
             $check = $_POST['check'];
             $check1 = $_POST['list'];
 
-            var_dump($check) ;
+            var_dump($check);
 
             for ($i = 0; $i < count($check); $i++) {
                 $data = array(
@@ -117,7 +135,7 @@ class Contact extends My_Controller {
                     'created' => date('Y-m-d H:i:s'),
                     'user_id' => $this->session->userdata('user_id'),
                 );
-                $checkKK = $this->Contact_model->mapping_check($this->session->userdata('user_id'), $check[$i],$check1);
+                $checkKK = $this->Contact_model->mapping_check($this->session->userdata('user_id'), $check[$i], $check1);
                 if (empty($checkKK)) {
                     $add = $this->Contact_model->mapping($data);
                 }
@@ -140,6 +158,7 @@ class Contact extends My_Controller {
             }
         }
     }
+
     public function create_group2() {
         if ($_POST) {
             $check = $_POST['name'];
@@ -166,6 +185,7 @@ class Contact extends My_Controller {
             }
         }
         $show['list'] = $this->Contact_model->group_list($user_id);
+        $show['show'] = $this->Contact_model->template_view($user_id);
         $data = array('title' => 'Send Sms', 'content' => 'User/Send_sms', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
@@ -196,11 +216,14 @@ class Contact extends My_Controller {
                     $show['success'] = "Successfully Send ";
                 }
             }
+            
+            redirect('Contact/Send_sms','refresh');
         }
-        $show['list'] = $this->Contact_model->group_list($user_id);
-        $data = array('title' => 'Send Sms', 'content' => 'User/Send_sms', 'view_data' => $show);
-        $this->load->view('template1', $data);
+//        $show['list'] = $this->Contact_model->group_list($user_id);
+//        $data = array('title' => 'Send Sms', 'content' => 'User/Send_sms', 'view_data' => $show);
+//        $this->load->view('template1', $data);
     }
+
     public function group() {
         $user_id = $this->session->userdata('user_id');
         if ($this->input->post()) {
@@ -210,15 +233,74 @@ class Contact extends My_Controller {
         $data = array('title' => 'Groups', 'content' => 'User/Group', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
+
     public function Group_inside() {
         $user_id = $this->session->userdata('user_id');
         if ($_GET) {
-            $group_id=$_GET['id'];
+            $group_id = $_GET['id'];
         }
         $show['list'] = $this->Contact_model->first_last($group_id);
         $show['count'] = $this->Contact_model->contact_count($group_id);
         $data = array('title' => 'Groups', 'content' => 'User/group_inside', 'view_data' => $show);
         $this->load->view('template1', $data);
+    }
+
+    public function Template() {
+        $user_id = $this->session->userdata('user_id');
+        $show['show'] = $this->Contact_model->template_view($user_id);
+        $data = array('title' => 'Template', 'content' => 'User/Template', 'view_data' => $show);
+        $this->load->view('template1', $data);
+    }
+
+    public function Create_Template() {
+        $user_id = $this->session->userdata('user_id');
+        if ($this->input->post()) {
+            $title = $this->input->post('title');
+            $message = $this->input->post('message');
+            $data = array(
+                'title' => $title,
+                'message' => $message,
+                'created' => date('Y-m-d H:i:s'),
+                'user_id' => $user_id,
+            );
+            $add = $this->Contact_model->Add_Template($data);
+        }
+        $data = array('title' => 'Create Template', 'content' => 'User/Create_Template', 'view_data' => 'blank');
+        $this->load->view('template1', $data);
+    }
+
+    public function Edit_Contact() {
+        $user_id = $this->session->userdata('user_id');
+        if ($_GET) {
+            $contact_id = $_GET['id'];
+        }
+        $show['show'] = $this->Contact_model->find_by_id($contact_id);
+        $data = array('title' => 'Create Template', 'content' => 'User/Edit_Contact', 'view_data' => $show);
+        $this->load->view('template1', $data);
+    }
+
+    public function Delete_Contact() {
+        $user_id = $this->session->userdata('user_id');
+        if ($_GET) {
+            $contact_id = $_GET['id'];
+        }
+        $show['show'] = $this->Contact_model->delete_contact($contact_id);
+        //redirect('Contact/view','refresh');
+    }
+
+    public function Update_Contact() {
+        $user_id = $this->session->userdata('user_id');
+        if ($this->input->post()) {
+            $contact_id = $this->input->post('contact_id');
+            $data = array(
+                'fname' => $this->input->post('first_name'),
+                'lname' => $this->input->post('last_name'),
+                'mobile' => $this->input->post('mobile'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            );
+            $update = $this->Contact_model->update_contact($contact_id, $data);
+            redirect('Contact/view', 'refresh');
+        }
     }
 
 }
