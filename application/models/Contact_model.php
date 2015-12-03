@@ -15,13 +15,20 @@ class Contact_model extends CI_Model {
         $query = $this->db->query($sql);
         return $query->row_array();
     }
+    public function find_by_tracking($contact_id,$tracking_id) {
+        $sql = "select * from contact where contact_id=$contact_id and tracking_id='$tracking_id'";
+        $query = $this->db->query($sql);
+        return $query->row_array();
+    }
     public function update_contact($id,$data) {
         $this->db->where(array('contact_id'=>$id));
         return $this->db->update('contact',$data);
     }
     public function delete_contact($id) {
         $this->db->where(array('contact_id'=>$id));
-        return $this->db->delete('contact');
+         $this->db->delete('contact');
+         $this->db->where(array('contact_id'=>$id));
+         $this->db->delete('mapping');
     }
 
     public function Show_contact($user_id) {
@@ -33,7 +40,7 @@ class Contact_model extends CI_Model {
     public function duplicate($user_id, $mobile) {
         $sql = "select * from contact where user_id=$user_id And mobile=$mobile";
         $query = $this->db->query($sql);
-        return $query->result();
+        return $query->row_array();
     }
 
     public function csv($upload, $user_id) {
@@ -105,6 +112,10 @@ class Contact_model extends CI_Model {
     }
     function Add_Template($data) {
         return $this->db->insert('Template', $data);
+    }
+    function tracking_id($id,$data) {
+        $this->db->where(array('contact_id'=>$id));
+        return $this->db->update('contact',$data);
     }
     function template_view($user_id) {
         $sql = "SELECT * FROM Template

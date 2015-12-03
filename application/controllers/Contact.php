@@ -39,6 +39,19 @@ class Contact extends My_Controller {
             $check = $this->Contact_model->duplicate($this->session->userdata('user_id'), $this->input->post('mobile'));
             if (empty($check)) {
                 $return = $this->Contact_model->Add_contact($data);
+                $convert = md5($return);
+                $five = substr($convert, 0, 5);
+                $data = array(
+                    'tracking_id' => $five,
+                );
+                $find_by_tracking = $this->Contact_model->find_by_tracking($return, $five);
+                if (empty($find_by_tracking)) {
+                    $this->Contact_model->tracking_id($return, $data);
+                } else {
+                    
+                    $five = substr($convert, 5, 10);
+                    $this->Contact_model->tracking_id($return, $data);
+                }
                 $data = array(
                     'contact_id' => $return,
                     'user_id' => $user_id,
@@ -48,6 +61,9 @@ class Contact extends My_Controller {
 
                 $this->Contact_model->mapping($data);
             }
+
+
+
             redirect('Contact/view');
         }
         $show['list'] = $this->Contact_model->group_list($this->session->userdata('user_id'));
@@ -216,8 +232,8 @@ class Contact extends My_Controller {
                     $show['success'] = "Successfully Send ";
                 }
             }
-            
-            redirect('Contact/Send_sms','refresh');
+
+            redirect('Contact/Send_sms', 'refresh');
         }
 //        $show['list'] = $this->Contact_model->group_list($user_id);
 //        $data = array('title' => 'Send Sms', 'content' => 'User/Send_sms', 'view_data' => $show);
