@@ -13,7 +13,7 @@
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#tab1">Add Contact</a></li>
         <li><a data-toggle="tab" href="#tab2">Add Multiple</a></li>
-<!--        <li><a data-toggle="tab" href="#tab3">Csv Upload</a></li>-->
+        <!--        <li><a data-toggle="tab" href="#tab3">Csv Upload</a></li>-->
     </ul>
 
     <div class="tab-content">
@@ -23,8 +23,9 @@
                 <div class="col-lg-6 panel panel-default">
                     <?php
                     $attributes = array('id' => 'activate');
-                    echo form_open('Contact/Add_contact',$attributes) ?>
-                    <?php echo validation_errors(); ?>
+                    echo form_open('Contact/Add_contact', $attributes)
+                    ?>
+<?php echo validation_errors(); ?>
                     <div class="panel-body">
                         <div class="form-group">
                             <label class="control-label">First Name</label>
@@ -42,10 +43,10 @@
                             <label class="control-label">Select Group</label>
                             <select class="form-control" name="group_id">
                                 <option value="">-Select Group-</option>
-                            <?php foreach($list as $sh):?>
-                                <option value="<?php echo $sh->id?>"><?php echo $sh->group_name?></option>
-                                <?php endforeach;?>
-                                </select>
+                                <?php foreach ($list as $sh): ?>
+                                    <option value="<?php echo $sh->id ?>"><?php echo $sh->group_name ?></option>
+<?php endforeach; ?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-success pull-right" value="Add Contact" />
@@ -59,16 +60,18 @@
         <div id="tab2" class="tab-pane fade">
             <div class="row">
                 <div class="col-lg-3"></div>
-                <div class="col-lg-6">
-                    <?php 
-                    echo form_open('Contact/bulk_contact')?>
-                    <div class="form-group">
-                        <textarea class="form-control" name="text"></textarea>
+                <div class="col-lg-6 panel panel-default">
+                    <div class="panel panel-body">
+                        <?php echo form_open('Contact/bulk_contact') ?>
+                        <div class="form-group">
+                            <label class="control-label">Enter Multiple Number(Notice :Please Press Enter After Every Number)</label>
+                            <textarea class="form-control" style="height: 155px;" name="text"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Add Contact" class="btn btn-success"/>
+                        </div>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <input type="submit" value="Add Contact" class="btn btn-success"/>
-                    </div>
-                    </form>
                 </div>
             </div>   
         </div>
@@ -76,7 +79,7 @@
             <div class="row">
                 <div class="col-lg-3"></div>
                 <div class="col-lg-6">
-                    <?php echo form_open_multipart('Contact/Csv_upload')?>
+                    <?php echo form_open_multipart('Contact/Csv_upload') ?>
                     <div class="form-group">
                         <input type="file" name="resume"/>
                     </div>
@@ -88,7 +91,7 @@
             </div>   
         </div>
 
-        
+
     </div>
 </div>
 <script>

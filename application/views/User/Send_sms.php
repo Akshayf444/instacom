@@ -38,7 +38,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Message</label>
-                            <textarea class="form-control" name="message"></textarea>
+                            <textarea class="form-control" style="height: 155px;" name="message"></textarea>
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-success pull-right" value="Send SMS" />
@@ -70,7 +70,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Message</label>
-                            <textarea class="form-control" id="message" name="message"></textarea>
+                            <textarea class="form-control" style="height: 155px;" id="message" name="message"></textarea>
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Send SMS" class="btn btn-success pull-right"/>
