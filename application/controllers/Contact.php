@@ -5,6 +5,7 @@ class Contact extends My_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('User');
+        $this->load->model('Link_model');
         $this->load->model('Sendsms');
         $this->load->model('Contact_model');
         $this->load->library('csvimport');
@@ -202,6 +203,7 @@ class Contact extends My_Controller {
         }
         $show['list'] = $this->Contact_model->group_list($user_id);
         $show['show'] = $this->Contact_model->template_view($user_id);
+        $show['show2']=  $this->Link_model->show_link($user_id);
         $data = array('title' => 'Send Sms', 'content' => 'User/Send_sms', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
@@ -217,7 +219,8 @@ class Contact extends My_Controller {
                     foreach ($check as $ck) {
                         $store = str_replace("#FirstName#", $ck->fname, $message);
                         $store1 = str_replace("#LastName#", $ck->lname, $store);
-                        $this->Sendsms->sendsms($ck->mobile, $store1);
+                        $store3 = str_replace("#tracking#", $ck->tracking_id, $store1);
+                        $this->Sendsms->sendsms($ck->mobile, $store3);
                         $data = array(
                             'number' => $ck->mobile,
                             'group_id' => $ck->group_id,

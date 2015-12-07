@@ -90,6 +90,17 @@
                             </select>
                         </div>
                     </div>
+                    <div class="panel panel-body">
+                        <div class="form-group">
+                            <label class="control-label">Select Url</label>
+                            <select class="form-control" name="Link" id="Link">
+                                <option value="">-Select-</option>
+                                <?php foreach ($show2 as $S): ?>
+                                    <option  value="<?php echo 'http://ic8.in/'.$S->link.'/#tracking#' ?>"><?php echo $S->Actual ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>   
         </div>
@@ -104,6 +115,10 @@ $(document).ready(function(){
         $('#message').append('#LastName#');
     })
     $('#my-select').change(function(){
+       // alert($('#message2').val());
+        $('#message').val($(this).val());
+    })
+    $('#Link').change(function(){
        // alert($('#message2').val());
         $('#message').val($(this).val());
     })
