@@ -116,11 +116,11 @@ $(document).ready(function(){
     })
     $('#my-select').change(function(){
        // alert($('#message2').val());
-        $('#message').val($(this).val());
+        $('#message').append($(this).val());
     })
     $('#Link').change(function(){
        // alert($('#message2').val());
-        $('#message').val($(this).val());
+        $('#message').append($(this).val());
     })
 })
 </script>
