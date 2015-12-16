@@ -4,15 +4,13 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-12">
-        <?php foreach ($list as $li): ?>
-            <div class="panel panel-default">
-                <div class="panel panel-body">
-                    <a href="<?php echo site_url(); ?>/Contact/group_inside?id=<?php echo $li->id ?>"><h4><?php echo $li->group_name ?></h4></a>
-                </div>
+    <?php foreach ($list as $li): ?>
+        <div class="col-lg-6">
+            <div class="panel panel-body">
+                <a href="<?php echo site_url(); ?>/Contact/group_inside?id=<?php echo $li->id ?>"><h4><?php echo $li->group_name ?><span class="pull-right text-danger">(<?php echo $li->contact_count ?>)</span></h4></a>
             </div>
-        <?php endforeach; ?>
-    </div>
+        </div>
+    <?php endforeach; ?>
 </div>
 
 <div  class="modal fade " tabindex="-1" role="dialog" aria-labelledby="ModalLabel" id="customer" aria-hidden="true">

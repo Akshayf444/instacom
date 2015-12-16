@@ -1,14 +1,8 @@
 <div class="row">
     <div class="col-lg-12">
-        <h3 class="page-header">Group Detail</h3>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-12">
         <h3>Number Count : <?php echo $count['count_contact']?></h3>
     </div>
 </div>
-
 <div class="row">
     <div class="col-lg-12">
         <table class="table table-bordered table-striped">
