@@ -9,12 +9,22 @@ class Contact extends My_Controller {
         $this->load->model('Sendsms');
         $this->load->model('Contact_model');
         $this->load->library('csvimport');
+        $this->load->library('pagination');
     }
 
     function view() {
         $user_id = $this->session->userdata('user_id');
+//
+//        $config['base_url'] = 'http://localhost/index.php/Contact/view/';
+//        $config['total_rows'] = 200;
+//        $config['per_page'] = 2;
+//
+//        $this->pagination->initialize($config);
+
+
         $show['show'] = $this->Contact_model->Show_contact($user_id);
         $show['list'] = $this->Contact_model->group_list($user_id);
+        //echo $this->pagination->create_links($show);
         $data = array('title' => 'View', 'page_title' => 'Contacts', 'content' => 'User/View_contact', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
@@ -249,7 +259,7 @@ class Contact extends My_Controller {
             
         }
         $show['list'] = $this->Contact_model->group_list($user_id);
-        $data = array('title' => 'Groups','page_title' => 'Groups', 'content' => 'User/Group', 'view_data' => $show);
+        $data = array('title' => 'Groups', 'page_title' => 'Groups', 'content' => 'User/Group', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
 

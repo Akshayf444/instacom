@@ -34,6 +34,7 @@
         <?php endforeach ?>
 
     </table>
+    
 
     <!--    <div class="row">
             <div class="col-lg-6 ">
@@ -44,6 +45,7 @@
     <?php foreach ($list as $li): ?>
                                 <option value="<?php echo $li->id ?>"><?php echo $li->group_name; ?></option>
     <?php endforeach; ?>
+   
                 </select>
             </div>
             <div class="col-lg-3 ">
@@ -51,7 +53,7 @@
                 <input type="submit" value="Add To Group" class="btn btn-success pull-left"/>
             </div>
         </div>-->
-    <!--</form>-->
+    <!--</form>--> 
     <div  class="modal fade " tabindex="-1" role="dialog" aria-labelledby="ModalLabel" id="customer" aria-hidden="true">
         <div style="width:40%;" class="modal-dialog ">
             <div class="modal-content">
