@@ -24,7 +24,7 @@ class Contact extends My_Controller {
 
         $show['show'] = $this->Contact_model->Show_contact($user_id);
         $show['list'] = $this->Contact_model->group_list($user_id);
-        //echo $this->pagination->create_links($show);
+
         $data = array('title' => 'View', 'page_title' => 'Contacts', 'content' => 'User/View_contact', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
@@ -270,7 +270,7 @@ class Contact extends My_Controller {
         }
         $show['list'] = $this->Contact_model->first_last($group_id);
         $show['count'] = $this->Contact_model->contact_count($group_id);
-        $data = array('title' => 'Groups', 'content' => 'User/group_inside', 'view_data' => $show);
+        $data = array('title' => 'Groups', 'page_title'=> 'Group Details' , 'content' => 'User/group_inside', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
 
@@ -304,7 +304,7 @@ class Contact extends My_Controller {
             $contact_id = $_GET['id'];
         }
         $show['show'] = $this->Contact_model->find_by_id($contact_id);
-        $data = array('title' => 'Create Template', 'content' => 'User/Edit_Contact', 'view_data' => $show);
+        $data = array('title' => 'Create Template','page_title'=>'Edit Contact', 'content' => 'User/Edit_Contact', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
 

@@ -10,25 +10,29 @@ class Contact_model extends CI_Model {
         $this->db->insert('contact', $data);
         return $this->db->insert_id();
     }
+
     public function find_by_id($contact_id) {
         $sql = "select * from contact where contact_id=$contact_id";
         $query = $this->db->query($sql);
         return $query->row_array();
     }
-    public function find_by_tracking($contact_id,$tracking_id) {
+
+    public function find_by_tracking($contact_id, $tracking_id) {
         $sql = "select * from contact where contact_id=$contact_id and tracking_id='$tracking_id'";
         $query = $this->db->query($sql);
         return $query->row_array();
     }
-    public function update_contact($id,$data) {
-        $this->db->where(array('contact_id'=>$id));
-        return $this->db->update('contact',$data);
+
+    public function update_contact($id, $data) {
+        $this->db->where(array('contact_id' => $id));
+        return $this->db->update('contact', $data);
     }
+
     public function delete_contact($id) {
-        $this->db->where(array('contact_id'=>$id));
-         $this->db->delete('contact');
-         $this->db->where(array('contact_id'=>$id));
-         $this->db->delete('mapping');
+        $this->db->where(array('contact_id' => $id));
+        $this->db->delete('contact');
+        $this->db->where(array('contact_id' => $id));
+        $this->db->delete('mapping');
     }
 
     public function Show_contact($user_id) {
@@ -69,15 +73,21 @@ class Contact_model extends CI_Model {
         return $this->db->insert('mapping', $data);
     }
 
-    function mapping_check($user_id, $contact_id,$group_id) {
+    function mapping_check($user_id, $contact_id, $group_id) {
         $sql = "select * from mapping where contact_id=$contact_id And user_id=$user_id and group_id=$group_id";
         $query = $this->db->query($sql);
         return $query->row_array();
     }
 
     function group_list($user_id) {
-        $sql = "select * from group_list where user_id=$user_id";
-        $query = $this->db->query($sql);
+        $this->db->select('count(*) as contact_count,g.id,g.group_name');
+        $this->db->from('group_list g');
+        $this->db->join('mapping m', ' m.group_id = g.id', 'left');
+        //$this->db->join('contact c', 'c.contact_id = m.contact_id');
+        $this->db->where('g.user_id', $user_id);
+        $this->db->group_by('g.id');
+        $query = $this->db->get();
+        //$this->output->enable_profiler(TRUE);
         return $query->result();
     }
 
@@ -89,6 +99,7 @@ class Contact_model extends CI_Model {
         $query = $this->db->query($sql);
         return $query->result();
     }
+
     function first_last($group_id) {
         $sql = "SELECT * FROM mapping mp
                 LEFT JOIN  contact c
@@ -97,6 +108,7 @@ class Contact_model extends CI_Model {
         $query = $this->db->query($sql);
         return $query->result();
     }
+
     function contact_count($group_id) {
         $sql = "SELECT COUNT(m.contact_id) AS count_contact FROM mapping m
                 WHERE group_id=$group_id";
@@ -107,16 +119,20 @@ class Contact_model extends CI_Model {
     function group_create($data) {
         return $this->db->insert('group_list', $data);
     }
+
     function save_sms_history($data) {
         return $this->db->insert('sms_count', $data);
     }
+
     function Add_Template($data) {
         return $this->db->insert('Template', $data);
     }
-    function tracking_id($id,$data) {
-        $this->db->where(array('contact_id'=>$id));
-        return $this->db->update('contact',$data);
+
+    function tracking_id($id, $data) {
+        $this->db->where(array('contact_id' => $id));
+        return $this->db->update('contact', $data);
     }
+
     function template_view($user_id) {
         $sql = "SELECT * FROM Template
                 WHERE user_id=$user_id";
