@@ -1,14 +1,3 @@
-<div class="row">
-    <div class="col-lg-12">
-        <h3 class="page-header">Add Contact</h3>
-    </div>
-</div>
-
-
-
-
-
-
 <div class="tabs">
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#tab1">Add Contact</a></li>
@@ -25,7 +14,7 @@
                     $attributes = array('id' => 'activate');
                     echo form_open('Contact/Add_contact', $attributes)
                     ?>
-<?php echo validation_errors(); ?>
+                    <?php echo validation_errors(); ?>
                     <div class="panel-body">
                         <div class="form-group">
                             <label class="control-label">First Name</label>
@@ -45,7 +34,7 @@
                                 <option value="">-Select Group-</option>
                                 <?php foreach ($list as $sh): ?>
                                     <option value="<?php echo $sh->id ?>"><?php echo $sh->group_name ?></option>
-<?php endforeach; ?>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="form-group">

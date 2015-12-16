@@ -52,7 +52,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <header class="main-header">
 
                 <!-- Logo -->
-                <a href="<?php echo site_url('Users/dashboard');?>" class="logo"><b>Instacom</b></a>
+                <a href="<?php echo site_url('Users/dashboard'); ?>" class="logo"><b>Instacom</b></a>
 
                 <!-- Header Navbar -->
                 <nav class="navbar navbar-static-top" role="navigation">
@@ -233,17 +233,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <ul class="sidebar-menu">
                         <!--                        <li class="header">HEADER</li>-->
 
-                        <li><a href="#"><span>Another Link</span></a></li>
                         <li class="treeview">
                             <a href="#"><span>Contact</span> <i class="fa fa-angle-left pull-right"></i></a>
                             <ul class="treeview-menu">
-                                <li><a href="<?php echo site_url()?>/Contact/view">View</a></li>
-                                <li><a href="<?php echo site_url()?>/Contact/Add_contact">Add</a></li>
-<!--                                <li><a href="#">Update</a></li>-->
+                                <li><a href="<?php echo site_url() ?>/Contact/view">View</a></li>
+                                <li><a href="<?php echo site_url() ?>/Contact/Add_contact">Add</a></li>
+                                <!--                                <li><a href="#">Update</a></li>-->
                             </ul>
                         </li>
-                        <li><a href="<?php echo site_url();?>/Contact/group"><span>Groups</span></a></li>
-                        <li><a href="<?php echo site_url();?>/Contact/Send_sms"><span>Sms</span></a></li>
+                        <li><a href="<?php echo site_url(); ?>/Contact/group"><span>Groups</span></a></li>
+                        <li><a href="<?php echo site_url(); ?>/Contact/Send_sms"><span>Sms</span></a></li>
                     </ul><!-- /.sidebar-menu -->
                 </section>
                 <!-- /.sidebar -->
@@ -255,12 +254,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <section class="content-header">
                     <h1>
                         <?php echo isset($page_title) ? $page_title : ''; ?>
-                        <small>Optional description</small>
+                        <small></small>
                     </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                        <li class="active">Here</li>
-                    </ol>
                 </section>
 
                 <!-- Main content -->

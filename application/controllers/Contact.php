@@ -15,7 +15,7 @@ class Contact extends My_Controller {
         $user_id = $this->session->userdata('user_id');
         $show['show'] = $this->Contact_model->Show_contact($user_id);
         $show['list'] = $this->Contact_model->group_list($user_id);
-        $data = array('title' => 'View', 'content' => 'User/View_contact', 'view_data' => $show);
+        $data = array('title' => 'View', 'page_title' => 'Contacts', 'content' => 'User/View_contact', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
 
@@ -23,7 +23,7 @@ class Contact extends My_Controller {
         $user_id = $this->session->userdata('user_id');
         $check = $this->Contact_model->duplicate($user_id);
 
-        $data = array('title' => 'View', 'content' => 'User/View_contact', 'view_data' => $show);
+        $data = array('title' => 'View', 'page_title' => 'Contacts', 'content' => 'User/View_contact', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
 
@@ -49,7 +49,7 @@ class Contact extends My_Controller {
                 if (empty($find_by_tracking)) {
                     $this->Contact_model->tracking_id($return, $data);
                 } else {
-                    
+
                     $five = substr($convert, 5, 10);
                     $this->Contact_model->tracking_id($return, $data);
                 }
@@ -68,7 +68,7 @@ class Contact extends My_Controller {
             redirect('Contact/view');
         }
         $show['list'] = $this->Contact_model->group_list($this->session->userdata('user_id'));
-        $data = array('title' => 'Add Contact', 'content' => 'User/Add_contact', 'view_data' => $show);
+        $data = array('title' => 'Add Contact', 'page_title' => 'Add Contact', 'content' => 'User/Add_contact', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
 
@@ -89,7 +89,7 @@ class Contact extends My_Controller {
             }
             redirect('Contact/view');
         }
-        $data = array('title' => 'Add Contact', 'content' => 'User/Add_contact', 'view_data' => 'blank');
+        $data = array('title' => 'Add Contact', 'page_title' => 'Add Contact', 'content' => 'User/Add_contact', 'view_data' => 'blank');
         $this->load->view('template1', $data);
     }
 
@@ -203,7 +203,7 @@ class Contact extends My_Controller {
         }
         $show['list'] = $this->Contact_model->group_list($user_id);
         $show['show'] = $this->Contact_model->template_view($user_id);
-        $show['show2']=  $this->Link_model->show_link($user_id);
+        $show['show2'] = $this->Link_model->show_link($user_id);
         $data = array('title' => 'Send Sms', 'content' => 'User/Send_sms', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
@@ -249,7 +249,7 @@ class Contact extends My_Controller {
             
         }
         $show['list'] = $this->Contact_model->group_list($user_id);
-        $data = array('title' => 'Groups', 'content' => 'User/Group', 'view_data' => $show);
+        $data = array('title' => 'Groups','page_title' => 'Groups', 'content' => 'User/Group', 'view_data' => $show);
         $this->load->view('template1', $data);
     }
 
