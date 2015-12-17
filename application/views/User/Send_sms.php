@@ -6,12 +6,11 @@
 <div class="row">
     <div class="col-lg-12">
         <h3 class=""> 
-        <?php 
-        if(isset($success))
-        {
-            echo $success;
-        }
-        ?></h3>
+            <?php
+            if (isset($success)) {
+                echo $success;
+            }
+            ?></h3>
     </div>
 </div>
 <div class="tabs">
@@ -96,7 +95,7 @@
                             <select class="form-control" name="Link" id="Link">
                                 <option value="">-Select-</option>
                                 <?php foreach ($show2 as $S): ?>
-                                    <option  value="<?php echo 'http://ic8.in/'.$S->link.'/#tracking#' ?>"><?php echo $S->Actual ?></option>
+                                    <option  value="<?php echo 'http://ic8.in/' . $S->link . '/#tracking#' ?>"><?php echo $S->Actual ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -107,20 +106,20 @@
     </div>
 </div>
 <script>
-$(document).ready(function(){
-    $('#first').click(function(){
-        $('#message').append('#FirstName#');
+    $(document).ready(function () {
+        $('#first').click(function () {
+            $('#message').append('#FirstName#');
+        })
+        $('#last').click(function () {
+            $('#message').append('#LastName#');
+        })
+        $('#my-select').change(function () {
+            // alert($('#message2').val());
+            $('#message').append($(this).val());
+        })
+        $('#Link').change(function () {
+            // alert($('#message2').val());
+            $('#message').append($(this).val());
+        })
     })
-    $('#last').click(function(){
-        $('#message').append('#LastName#');
-    })
-    $('#my-select').change(function(){
-       // alert($('#message2').val());
-        $('#message').append($(this).val());
-    })
-    $('#Link').change(function(){
-       // alert($('#message2').val());
-        $('#message').append($(this).val());
-    })
-})
 </script>
